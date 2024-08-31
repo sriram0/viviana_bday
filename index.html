@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Viviana!</title>
+    <style>
+        h1{
+            font-size:50px;
+        }
+        body{
+            background-color: rgb(100, 200, 255);
+            color:red;
+            font-size:20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Happy 1st Birthday <span style="color:rgb(100,0,255)">Viviana!!!</span></h1>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.7.0/lib/p5.js"></script>
+    <script>
+        let f=[]
+        function setup(){
+            createCanvas(400, 400)
+            let f1=[[200,200, color(255,0,0), Math.PI/2]]
+            f=f1;
+        }
+        let fp1=10
+        function fish(x,y, c,a){
+            push()
+            noStroke()
+            fill(c)
+            translate(x,y)
+            if(a>Math.PI){
+                rotate(-(a-(Math.PI*3/2)))
+            }else{
+                scale(-1, 1)
+                rotate((a-(Math.PI*1/2)))
+            }
+            scale(0.5)
+            beginShape()
+            bezier(-10,0,0,-15,30,-15,40,0)
+            endShape(CLOSE)
+            beginShape()
+            bezier(40,0,40,-10,50,-fp1-3,63,-fp1)
+            bezier(63,-fp1,60,0,55,0,40,0)
+            endShape(CLOSE)
+            fill(lerpColor(c,color(0),0.2))
+            beginShape()
+            bezier(40,0,30,15,0,15,-10,0)
+            endShape(CLOSE)
+            beginShape()
+            bezier(40,0,40,10,50,fp1+3,63,fp1)
+            bezier(63,fp1,60,0,55,0,40,0)
+            endShape(CLOSE)
+            strokeWeight(7)
+            stroke(0)
+            point(3,-5)
+            pop()
+        }
+        function draw(){
+            background(100, 200, 255, 50)
+            for(let i=0;i<f.length;i++){
+                console.log(f[i])
+                push()
+                
+                fish(...f[i])
+                pop()
+                f[i][0]+=Math.sin(f[i][3])
+                f[i][1]+=Math.cos(f[i][3])
+                f[i][3]+=(Math.random()-0.5)/2
+                if(f[i][0]>400){
+                    f[i][0]-=400
+                }
+                if(f[i][1]>400){
+                    f[i][1]-=400
+                }
+                if(f[i][1]<0){
+                    f[i][1]+=400
+                }
+                if(f[i][1]<0){
+                    f[i][1]+=400
+                }
+                if(f[i][3]<0){
+                    f[i][3]+=Math.PI*2
+                }
+                if(f[i][3]>Math.PI*2){
+                    f[i][3]-=Math.PI*2
+                }
+            }
+        }
+        function mouseClicked(){
+            f.push([mouseX, mouseY, color(Math.random()*255,Math.random()*255,Math.random()*255), 0])
+        }
+        function touchEnded(){
+            f.push([touches[0].x, touches[0].y, color(Math.random()*255,Math.random()*255,Math.random()*255), 0])
+        }
+    </script>
+    Tap to add fish
+</body>
+</html>
